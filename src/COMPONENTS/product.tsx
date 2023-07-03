@@ -1,7 +1,8 @@
 import React from 'react'
 import {useState} from 'react'
+import {Link} from 'react-router-dom'
 import '../COMPONENTS/product.css'
-import Cart from '../Cart/cart';
+// import Cart from '../Cart/cart';
 import CartItem from '../CartItem/cartItem';
 
 
@@ -12,6 +13,8 @@ export interface CartItemType  {
     image: string;
     title: string;
     price: number;
+    count: number;
+    toFixed:number;
 }
 const Product = () => {
 const [datas,setDatas]= useState<CartItemType[]>([]);
@@ -24,33 +27,40 @@ const [datas,setDatas]= useState<CartItemType[]>([]);
  .catch((error) =>{
     console.error(error);
  });
- const [cartItems,setCartItems] = useState([] as CartItemType[]);
 
- 
- const handleAddToCart = ( clickedItem: CartItemType) =>{
-    setCartItems(prev =>{
-        //1.is the item already added in the cart?
-        const isItemInCart = prev.find(item => item.id === clickedItem.id)
-
-        if(isItemInCart){
-        return prev.map(item =>
-            item.id ===clickedItem.id ? {...item,price:item.price + 1}
-            :item
-        );
-        }
-        // first time the item is added
-        return [...prev, {...clickedItem, price: 1}];
-    })
- };
- const handleRemoveFromCart = () => null;
+const handleAddToCart =(CartItemType:CartItemType) => {
+  const item: any = localStorage.getItem("CartItemType");
+  let ProductList : any =[];
+  console.log(JSON.parse(item));
+  ProductList = JSON.parse(item);
+  if(ProductList === null) {
+    ProductList = [];
+    ProductList.push(CartItemType);
+  }
+  else
+  {
+    let checkFoDuplicate = ProductList.filter(
+      (item: CartItemType) => item.id === CartItemType.id
+    );
+    console.log(checkFoDuplicate);
+    if (checkFoDuplicate.length < 1) {
+      ProductList.push(CartItemType);
+    }
+  }
+  console.log(ProductList,CartItemType)
+  localStorage.setItem("CartItemType", JSON.stringify(ProductList))
+}
  
 return (
-    
+    <div className='container'>
+   <Link to='/cart'><button>View Cart</button></Link>
     <div className='product-container'>
-         
+        
       {datas.map((detail) =>(
         <div className='product-details'key={detail.id}>
-            <img src ={detail.image}/>
+            <img src ={detail.image} 
+            alt='product'
+            onClick={() => handleAddToCart(detail)}/>
             <h1>{detail.title}</h1>
             <h2>{detail.category}</h2>
             <p>{detail.description}</p>
@@ -60,6 +70,7 @@ return (
       )
     
     )}
+    </div>
     </div>
   )
 }
