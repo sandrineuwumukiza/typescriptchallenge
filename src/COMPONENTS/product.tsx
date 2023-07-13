@@ -53,6 +53,8 @@ const handleAddToCart =(CartItemType:CartItemType) => {
  
 return (
     <div className='container'>
+      <div className='heading-product'>
+      <h1>ALL PRODUCT IN STOCK</h1></div>
    <Link to='/cart'><button>View Cart</button></Link>
     <div className='product-container'>
         

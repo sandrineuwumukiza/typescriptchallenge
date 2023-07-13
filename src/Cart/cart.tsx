@@ -141,10 +141,9 @@ onClick={() =>incrementProducts(detail.id)}>+</button>
       </div>
       <div className='delivery-details'>
       <h3>Delivery</h3>
-      <h4>Free</h4>
-      <button>Express</button>
-      <h2>Delivery Date:04 July,2023 </h2>
-      <input type='text' placeholder='Promocode'/><input type='submit' value='Apply'/><br></br>
+      <button>Express</button><br></br>
+      {/* <h2>Delivery Date:04 July,2023 </h2> */}
+      {/* <input type='text' placeholder='Promocode'/><input type='submit' value='Apply'/><br></br> */}
       <h1>SubTotal:$<span>{Total.toFixed(2)}</span></h1>
       <input type='submit' value='proceed to checkout' className='checkout'/><br></br>
     <Link to="/">  <input type='submit' value='Continue Shopping' className='continue-shopping'/></Link>
